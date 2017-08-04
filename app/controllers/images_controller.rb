@@ -11,6 +11,9 @@ class ImagesController < ApplicationController
       @objs = @objs.reverse_each
     end
 
-    @objs = @objs.first(params[:size].to_i || DEFAULT_SIZE)
+    page = params[:page]&.to_i || 1
+    size = params[:size]&.to_i || DEFAULT_SIZE
+
+    @objs = @objs.drop((page - 1) * size).first(size)
   end
 end
