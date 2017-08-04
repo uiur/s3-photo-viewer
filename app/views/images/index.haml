@@ -1,6 +1,8 @@
 %ul
-  - @objs.each.with_index do |obj, i|
+  - @objs.each do |obj|
     %li
       %p= obj.key
       = link_to obj.public_url, target: '_blank' do
         = image_tag obj.public_url, width: 400
+
+= link_to_next_page @objs, 'Next'
