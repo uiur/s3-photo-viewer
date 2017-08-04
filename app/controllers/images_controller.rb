@@ -14,6 +14,12 @@ class ImagesController < ApplicationController
     page = params[:page]&.to_i || 1
     size = params[:size]&.to_i || DEFAULT_SIZE
 
-    @objs = @objs.drop((page - 1) * size).first(size)
+    @objs = @objs.select { |obj| is_image?(obj.key) }.drop((page - 1) * size).first(size)
+  end
+
+  private
+
+  def is_image?(key)
+    key =~ /\.png|jpg|jpeg|gif$/i
   end
 end
