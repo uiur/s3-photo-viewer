@@ -1,0 +1,7 @@
+%ul
+  - @objs.reverse_each.with_index do |obj, i|
+    - break if i >= 5
+    %li
+      %p= obj.key
+      = link_to obj.public_url do
+        = image_tag obj.public_url, width: 400
