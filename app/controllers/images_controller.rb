@@ -13,9 +13,11 @@ class ImagesController < ApplicationController
 
     @objs = @objs.select { |obj| is_image?(obj.key) }
 
+    step = params[:step]&.to_i || 1
+    @objs = @objs.select.with_index {|obj, i| i % step == 0 }
+
     page = params[:page]&.to_i || 1
     size = params[:size]&.to_i || DEFAULT_SIZE
-
     @objs = Kaminari.paginate_array(@objs).page(page).per(size)
   end
 
