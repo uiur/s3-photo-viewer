@@ -5,6 +5,17 @@ class ImagesController < ApplicationController
     s3 = Aws::S3::Resource.new
     bucket = s3.bucket(params[:bucket])
 
+    client = Aws::S3::Client.new
+    res = client.list_objects(bucket: params[:bucket], delimiter: '/', prefix: params[:prefix] + '/')
+
+    @objs = []
+    @dirs= []
+
+    if res.common_prefixes.present?
+      @dirs = res.common_prefixes.map(&:prefix)
+      return
+    end
+
     @objs = bucket.objects(prefix: params[:prefix])
 
     if params[:order] == 'desc'
