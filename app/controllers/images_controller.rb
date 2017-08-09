@@ -2,6 +2,8 @@ class ImagesController < ApplicationController
   DEFAULT_SIZE = 10
 
   def index
+    params[:prefix] ||= ''
+
     s3 = Aws::S3::Resource.new
     bucket = s3.bucket(params[:bucket])
 
